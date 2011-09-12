@@ -1,0 +1,1 @@
+This is a simple "snake" game using the Haskell library Gloss. You can run it by copy and pasting the contents of Snake.hs to http://dac4.designacourse.com:8000/game . Thanks to [cdsmith](http://cdsmith.wordpress.com/) for setting up the server!
