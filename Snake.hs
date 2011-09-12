@@ -14,7 +14,12 @@ data World = World
 timestep = 0.5
 
 initial :: World
-initial = World [(0,0), (1,0), (2,0)] 5 [(0,4)] U 0
+initial = World 
+  [(0,0), (1,0), (2,0)] -- snake
+  5 -- size
+  [(0,4), (10,-6), (-5,16)] -- apples
+  U -- direction
+  0 -- time
 
 event :: Event -> World -> World
 event (EventKey (SpecialKey key) Up _ _) world = changeDirection key world
@@ -29,8 +34,14 @@ changeDirection KeyLeft world = world { direction = L }
 step :: Float -> World -> World
 step dt world = if newTime < timestep then
   world { time = newTime } else
-  world { time = newTime - timestep, snake = moveSnake world }
+  world { time = newTime - timestep
+        , snake = moveSnake world
+        , apples = newApples world
+        }
   where newTime = (time world) + dt
+
+newApples :: World -> [Point]
+newApples world = filter (/= (head $ snake world)) $ apples world
 
 moveSnake :: World -> [Point]
 moveSnake world = newHead : newTail where
